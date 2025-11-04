@@ -3,11 +3,11 @@ from token_definitions import *
 import sys
 
 def format_output(lexeme, token_type):
-    # Format output as required by the assignment
+    # Format output as "lexeme" = token_type
     return '"{}" = {}'.format(lexeme, token_type)
 
 def process_file(input_filename):
-    # Main processing pipeline for the lexical analyzer
+    # Read input file
     with open(input_filename, 'r') as f:
         code = f.read()
     
@@ -27,7 +27,7 @@ def process_file(input_filename):
     return results
 
 def main():
-    # Run the lexical analyzer
+    # Check command line arguments
     if len(sys.argv) != 2:
         print("Usage: python main.py <input_file>")
         sys.exit(1)

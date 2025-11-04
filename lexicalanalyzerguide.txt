@@ -55,3 +55,30 @@ What you’ll need to submit:
 
 Screenshot of Correct Output (20 points)  
 PDF Report (Max 2 Pages not including screenshots) including: Explanation of code functionality Tokenization methodology Time and space complexity analysis (30 points)  
+
+
+COVER PAGE CPSC 323-11 
+Programming Assignments
+
+1. Names 
+[ 1. ] 
+[ 2. ] 
+[ 3. ] 
+
+2. Assignment Number [  ] 
+
+3. Due Date [  ] 
+
+4. Submission Date [  ]
+
+
+Output Screenshots
+
+
+Explanation of code functionality 
+
+
+Tokenization methodology 
+
+
+Time and space complexity analysi

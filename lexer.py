@@ -2,22 +2,25 @@ from token_definitions import *
 import re
 
 def remove_comments(code):
-    # Remove // and /* */ style comments but keep them if they appear in strings
-    # The pattern matches strings/chars first, then matches comments
+    # Regex pattern has two groups: group 1 = strings/chars, group 2 = comments
+    # We match strings first to avoid removing comment-like text inside strings
+    # (?:[^"\\]|\\.)* matches any char except " or \, or any escaped char
     pattern = r'("(?:[^"\\]|\\.)*"|\'(?:[^\'\\]|\\.)*\')|(/\*.*?\*/|//[^\n]*)'
     
     def replace_func(match):
         if match.group(1):
-            return match.group(1)  # keep strings and chars
+            return match.group(1)  # keep strings and chars unchanged
         else:
-            return ''  # remove comments
+            return ''  # replace comments with empty string
     
+    # re.DOTALL makes . match newlines for multi-line comments
     code = re.sub(pattern, replace_func, code, flags=re.DOTALL)
     return code
 
 def tokenize(code):
-    # Extract tokens using regex patterns
-    # Order matters, longer patterns need to be checked before shorter ones
+    # Regex pattern to extract all tokens from the code
+    # Order matters, need to check multi-char patterns before single-char
+    # \d matches digits, \w matches word chars, [a-zA-Z_] starts identifiers
     pattern = r'''
         "(?:[^"\\]|\\.)*"       |  # strings
         '(?:[^'\\]|\\.)'        |  # characters
@@ -29,11 +32,10 @@ def tokenize(code):
     '''
     
     tokens = re.findall(pattern, code, re.VERBOSE)
-    tokens = [t for t in tokens if t.strip()]
+    tokens = [t for t in tokens if t.strip()]  # remove any whitespace tokens
     return tokens
 
 def classify_token(lexeme):
-    # Check what type of token this is
     # Check keywords first so "int" doesn't get classified as an identifier
     if lexeme in KEYWORDS:
         return TOKEN_KEYWORD
@@ -44,17 +46,17 @@ def classify_token(lexeme):
     if lexeme in SEPARATORS:
         return TOKEN_SEPARATOR
     
-    # Check for different types of literals
-    if re.match(r'^\d+$', lexeme):  # integers
+    # Check for different types of literals using regex
+    if re.match(r'^\d+$', lexeme):  # integers like 10, 42
         return TOKEN_LITERAL
     
-    if re.match(r'^\d+\.\d+$', lexeme):  # floats
+    if re.match(r'^\d+\.\d+$', lexeme):  # floats like 20.5
         return TOKEN_LITERAL
     
-    if re.match(r'^".*"$', lexeme):  # strings
+    if re.match(r'^".*"$', lexeme):  # strings like "Hello"
         return TOKEN_LITERAL
     
-    if re.match(r"^'(?:[^'\\]|\\.)'$", lexeme):  # characters
+    if re.match(r"^'(?:[^'\\]|\\.)'$", lexeme):  # characters like 'x'
         return TOKEN_LITERAL
     
     # Everything else is an identifier
