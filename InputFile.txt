@@ -1,0 +1,21 @@
+int main() {
+    int a = 10;
+    float b = 20.5;
+    char c = 'x';
+    string message = "Hello, World!";
+
+    // Perform addition
+    int sum = a + b;
+
+    if (sum >= 30) {
+        message = "Sum is greater or equal to 30";
+    } else {
+        message = "Sum is less than 30";
+    }
+
+    for (int i = 0; i < 5; i++) {
+        sum = sum + i;
+    }
+
+    return sum;  // returning the final value
+}
