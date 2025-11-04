@@ -5,7 +5,7 @@ A lexical analysis tool that reads source code from a .txt file, removes whitesp
 ## How to Run
 
 ```bash
-python main.py <input_file>
+python3 main.py <input_file>
 ```
 
 Output will be printed to console and saved to `output.txt`.
